@@ -8,45 +8,45 @@
 
 <body>
 
+	<script type="text/javascript">
+		var sPageURL = window.location.search;
+		var sWFID = sPageURL.split("=")[1];
+		var bIsDevelopMode = false;
+	
+		if (window.navigator.userAgent.indexOf("iPhone") != -1 || window.navigator.userAgent.indexOf("iPad") != -1) {
+			// APPLE
+			console.log("apple");
+			window.location = 'https://www.google.com.tw/';
+		} else if (window.navigator.userAgent.indexOf("Android") != -1) {
+			// Android
+			console.log("Android");
+			window.location = 'https://hncbdeeplink.page.link/?link=https://hncbdeeplink.page.link/web?function%3D$' + sWFID + '&apn=com.hncb.mobilebank';
+		} else {
+			// WEB 
+			console.log("WEB");
+			var sWEHPageUrl = (bIsDevelopMode ? 'https://10.8.210.53' : 'https://netbank.hncb.com.tw') + '/netbank/servlet/TrxDispatcher?trx=com.lb.wibc.trx.Login&state=prompt&Recognition=private&target=AssetQuery';
+			var sFinancialPageUrl = (bIsDevelopMode ? 'https://10.8.210.53' : 'https://netbank.hncb.com.tw') + '/netbank/servlet/TrxDispatcher?trx=com.lb.wibc.trx.Login&state=prompt&Recognition=private&target=MFundPurchase';
+			var sRedirectURL = '';
+	
+			switch (sWFID) {
+				case 'WFIDE1_LINE_BC':
+					sRedirectURL = sWEHPageUrl;
+					break;
+				case 'WFID1142':
+					sRedirectURL = sFinancialPageUrl;
+					break;
+				default:
+					sRedirectURL = '';
+			}
+	
+			if (sRedirectURL == '') {
+				alert("系統錯誤，請稍後再試")
+			}
+			console.log("sRedirectURL" + sRedirectURL);
+			window.location = sRedirectURL;
+		}
+	
+	</script>
 </body>
-<script type="text/javascript">
-	var sPageURL = window.location.search;
-	var sWFID = sPageURL.split("=")[1];
-	var bIsDevelopMode = false;
-
-	if (window.navigator.userAgent.indexOf("iPhone") != -1 || window.navigator.userAgent.indexOf("iPad") != -1) {
-		// APPLE
-		console.log("apple");
-		window.location = 'https://www.google.com.tw/';
-	} else if (window.navigator.userAgent.indexOf("Android") != -1) {
-		// Android
-		console.log("Android");
-		window.location = 'https://hncbdeeplink.page.link/?link=https://hncbdeeplink.page.link/web?function%3D$' + sWFID + '&apn=com.hncb.mobilebank';
-	} else {
-		// WEB 
-		console.log("WEB");
-		var sWEHPageUrl = (bIsDevelopMode ? 'https://10.8.210.53' : 'https://netbank.hncb.com.tw') + '/netbank/servlet/TrxDispatcher?trx=com.lb.wibc.trx.Login&state=prompt&Recognition=private&target=AssetQuery';
-		var sFinancialPageUrl = (bIsDevelopMode ? 'https://10.8.210.53' : 'https://netbank.hncb.com.tw') + '/netbank/servlet/TrxDispatcher?trx=com.lb.wibc.trx.Login&state=prompt&Recognition=private&target=MFundPurchase';
-		var sRedirectURL = '';
-
-		switch (sWFID) {
-			case 'WFIDE1_LINE_BC':
-				sRedirectURL = sWEHPageUrl;
-				break;
-			case 'WFID1142':
-				sRedirectURL = sFinancialPageUrl;
-				break;
-			default:
-				sRedirectURL = '';
-		}
-
-		if (sRedirectURL == '') {
-			alert("系統錯誤，請稍後再試")
-		}
-		console.log("sRedirectURL" + sRedirectURL);
-		window.location = sRedirectURL;
-	}
-
-</script>
 
 </html>
